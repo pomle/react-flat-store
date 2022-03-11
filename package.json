@@ -1,5 +1,5 @@
 {
-  "name": "-",
+  "name": "name",
   "version": "0.0.0-0",
   "description": "",
   "author": "",
@@ -9,20 +9,17 @@
     "url": "git+https://github.com/"
   },
   "keywords": [],
-  "main": "dist/index.js",
-  "module": "dist/index.modern.js",
   "source": "src/index.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.modern.js",
   "engines": {
     "node": ">=10"
   },
   "scripts": {
-    "build": "microbundle-crl --no-compress --format modern,cjs",
-    "start": "microbundle-crl watch --no-compress --format modern,cjs",
-    "test": "run-s test:unit test:lint test:build",
-    "test:build": "run-s build",
-    "test:lint": "eslint src --ext .ts,.tsx",
-    "test:unit": "cross-env CI=1 jest test --env=jsdom",
-    "test:watch": "react-scripts test --env=jsdom"
+    "build": "microbundle",
+    "start": "microbundle watch",
+    "lint": "eslint src --ext .ts,.tsx",
+    "test": "jest test --env=jsdom"
   },
   "peerDependencies": {},
   "devDependencies": {
@@ -32,7 +29,6 @@
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
     "babel-eslint": "^10.0.3",
-    "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.7.0",
     "eslint-config-standard": "^14.1.0",
@@ -44,7 +40,7 @@
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^27.1.0",
-    "npm-run-all": "^4.1.5",
+    "microbundle": "^0.14.2",
     "prettier": "^2.0.4",
     "ts-jest": "^27.0.5",
     "typescript": "^4.1.0"
