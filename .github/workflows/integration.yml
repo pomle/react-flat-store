@@ -24,4 +24,4 @@ jobs:
         run: yarn run build
 
       - name: Predeploy
-        run: yarn run predeploy
+        run: npm pack
