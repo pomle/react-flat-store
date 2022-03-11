@@ -1,11 +1,9 @@
 # NPM Package
 
-Description
+NPM Package Template that uses [microbundle](https://github.com/developit/microbundle) for bundling.
 
-## Usage
+Commands
 
-### * Install.
-
-```bash
-yarn add
-```
+- `yarn run lint`
+- `yarn run test`
+- `yarn run build`
