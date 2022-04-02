@@ -1,6 +1,4 @@
-# NPM Package
-
-NPM Package Template that uses [microbundle](https://github.com/developit/microbundle) for bundling.
+# React Flat Store
 
 Commands
 

@@ -1,6 +1,3 @@
-export {
-  useFlatStore,
-  useFlatCollection,
-  toList,
-  withData,
-} from "./flat-store";
+export { useFlatStore } from "./flat-store";
+export { createStore } from "./context";
+export { toList, withData } from "./helper";

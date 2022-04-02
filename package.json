@@ -22,11 +22,9 @@
     "test": "jest test --env=jsdom"
   },
   "peerDependencies": {
-    "@pomle/throb": "^1.0.0",
     "react": ">=16.8.0"
   },
   "devDependencies": {
-    "@pomle/throb": "^1.0.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@types/jest": "^25.1.4",
     "@types/node": "^12.12.38",
