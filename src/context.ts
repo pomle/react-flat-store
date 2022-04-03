@@ -1,28 +1,27 @@
 import { createContext, createElement, useContext } from "react";
-import { FlatStore } from "./flat-store";
+import { Store } from "./store";
 
 interface FlatStoreContextProps {
   children: React.ReactNode;
 }
 
-export function createStoreContext<T extends Record<string, FlatStore<any>>>(
-  useState: () => T,
-) {
-  type StoreContextState = T;
-
+export function createStoreContext<
+  StoreContextState extends Record<string, Store<any>>
+>(useState: () => StoreContextState) {
   const Context = createContext<StoreContextState | null>(null);
 
-  function FlatStoreContext({ children }: FlatStoreContextProps) {
+  function StoreContext({ children }: FlatStoreContextProps) {
     const value = useState();
     return createElement(Context.Provider, { value }, children);
   }
 
-  function useFlatStore() {
+  function useStore() {
     const context = useContext(Context);
     if (!context) {
       throw new Error("useStore without StoreContext");
     }
     return context;
   }
-  return { useFlatStore, FlatStoreContext };
+
+  return { useStore, StoreContext };
 }

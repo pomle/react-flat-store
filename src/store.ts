@@ -1,7 +1,7 @@
 import { Entries, Entry, useEntries } from "./entries";
 import { Collection, useCollection } from "./collection";
 
-export type FlatStore<T> = {
+export type Store<T> = {
   entries: {
     entries: Entries<T>;
     set: (id: string, data: T) => void;
@@ -10,7 +10,7 @@ export type FlatStore<T> = {
   collection: Collection<T>;
 };
 
-export function useFlatStore<T>() {
+export function useStore<T>() {
   const entries = useEntries<T>();
   const collection = useCollection(entries.get);
 
