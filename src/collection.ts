@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { Entry } from "entries";
+import { Entry } from "./entries";
 
 type CollectionKey = string;
 

@@ -5,8 +5,10 @@ interface FlatStoreContextProps {
   children: React.ReactNode;
 }
 
-export function createStore(useState: () => Record<string, FlatStore<any>>) {
-  type StoreContextState = ReturnType<typeof useState>;
+export function createStore<T extends Record<string, FlatStore<any>>>(
+  useState: () => T,
+) {
+  type StoreContextState = T;
 
   const Context = createContext<StoreContextState | null>(null);
 
