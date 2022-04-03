@@ -1,7 +1,7 @@
 import { Entries, Entry, useEntries } from "./entries";
 import { Collection, useCollection } from "./collection";
 
-export type Store<T> = {
+export type EntityStore<T> = {
   entries: {
     entries: Entries<T>;
     set: (id: string, data: T) => void;
@@ -10,7 +10,7 @@ export type Store<T> = {
   collection: Collection<T>;
 };
 
-export function useStore<T>() {
+export function useEntity<T>() {
   const entries = useEntries<T>();
   const collection = useCollection(entries.get);
 

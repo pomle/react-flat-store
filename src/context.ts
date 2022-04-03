@@ -1,12 +1,12 @@
 import { createContext, createElement, useContext } from "react";
-import { Store } from "./store";
+import { EntityStore } from "./entity";
 
 interface FlatStoreContextProps {
   children: React.ReactNode;
 }
 
 export function createStoreContext<
-  StoreContextState extends Record<string, Store<any>>
+  StoreContextState extends Record<string, EntityStore<any>>
 >(useState: () => StoreContextState) {
   const Context = createContext<StoreContextState | null>(null);
 
