@@ -10,7 +10,7 @@ type Entries<T> = Record<string, Entry<T>>;
 
 const EMPTY = Object.create(null);
 
-const FLUSH_THOTTLE = 150;
+const FLUSH_THROTTLE = 150;
 
 const PLACEHOLDER: Entry<null> = {
   ready: false,
@@ -29,7 +29,7 @@ export function useEntries<T>() {
       });
 
       buffer = {};
-    }, FLUSH_THOTTLE);
+    }, FLUSH_THROTTLE);
 
     return function set(id: string, data: T) {
       buffer[id] = {
