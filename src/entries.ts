@@ -1,12 +1,12 @@
 import { useCallback, useMemo, useState } from "react";
 import { throttle } from "./throttle";
 
-export type Entries<T> = Record<string, Entry<T>>;
-
 export type Entry<T> = {
   ready: boolean;
   data: T;
 };
+
+type Entries<T> = Record<string, Entry<T>>;
 
 const EMPTY = Object.create(null);
 
@@ -49,6 +49,6 @@ export function useEntries<T>() {
   );
 
   return useMemo(() => {
-    return { entries, set, get };
-  }, [entries, set, get]);
+    return { set, get };
+  }, [set, get]);
 }
