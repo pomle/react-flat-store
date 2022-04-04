@@ -20,13 +20,13 @@ const PLACEHOLDER: Entry<null> = {
 };
 
 export function useEntries<T>() {
-  const [entries, setEntries] = useState<EntryIndex<T>>(EMPTY);
+  const [index, setIndex] = useState<EntryIndex<T>>(EMPTY);
 
   const set = useMemo(() => {
     let buffer: EntryIndex<T> = {};
 
     const flush = throttle(() => {
-      setEntries((entries) => {
+      setIndex((entries) => {
         return { ...entries, ...buffer };
       });
 
@@ -45,12 +45,10 @@ export function useEntries<T>() {
 
   const get = useCallback(
     (id: EntryKey): Entry<T | null> => {
-      return entries[id] || PLACEHOLDER;
+      return index[id] || PLACEHOLDER;
     },
-    [entries],
+    [index],
   );
 
-  return useMemo(() => {
-    return { set, get };
-  }, [set, get]);
+  return { get, set, index };
 }
