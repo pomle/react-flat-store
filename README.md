@@ -102,6 +102,57 @@ In the example below we prepare our application for two entities; `User` and `Bo
   }
   ```
 
+- Combine collection writes with entry writes to work with normalized data over multiple queries. Namespace can be used to isolating collections, as well as sharing collections.
+
+  - To share collections; use the same namespace.
+  - To isolate collections; use a secret namespace.
+
+  ```tsx
+  import { useStore } from "./store";
+  import { useAPI } from "./api";
+
+  const SEARCH_NAMESPACE = "user-search";
+
+  function useUserQuery(searchQuery: string) {
+    const userStore = useStore().patient;
+
+    useEffect(() => {
+      api.queryUsers(searchQuery).then((users) => {
+        const ids: string[] = [];
+        users.forEach((user) => {
+          ids.push(user.id);
+          userStore.entries.set(user.id, user);
+        });
+        userStore.collection.set(SEARCH_NAMESPACE, ids);
+      });
+    }, [searchQuery, userStore.entries.set, userStore.collection.set]);
+
+    const userEntries = userStore.collection.get(SEARCH_NAMESPACE);
+
+    return userEntries;
+  }
+
+  export default function UserSearch() {
+    const query = "john doe";
+
+    const userEntries = useUserQuery(query);
+
+    if (!userEntries) {
+      return <>Loading result</>;
+    }
+
+    return userEntries.map((userEntry) => {
+      if (!userEntry.data) {
+        return <>No data</>;
+      }
+
+      const user = userEntry.data;
+
+      return <>{user.username}</>;
+    });
+  }
+  ```
+
 ## Documentation
 
 - `Entry<T>`
