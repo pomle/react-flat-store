@@ -11,7 +11,7 @@ To accomplish this, flat store abstracts the following work loads.
 
 ## Usage
 
-Flat Store comes with one core component, the `useEntity` hook. You are encourage to set up your solution by providing a hook that provides the entire state tree to the context creator, and then use the `useStore` hook that the context creator provides to access the store.
+Flat Store comes with one core component, the `useEntity` hook. You are encourage to set up your solution by providing a hook that provides the entire state tree to the context creator, then call `useStore` hook provided by context creator to access the store.
 
 ### Examples
 
