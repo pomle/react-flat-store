@@ -1,20 +1,20 @@
 import { useCallback, useState } from "react";
-import { Entry } from "./entries";
+import { Entry, EntryKey } from "./entries";
 
 type CollectionKey = string;
 
 export type Collection<T> = {
   get: (key: CollectionKey) => Entry<T>[] | null;
-  set: (key: CollectionKey, refs: string[]) => void;
+  set: (key: CollectionKey, refs: EntryKey[]) => void;
 };
 
 const EMPTY = Object.create(null);
 
 export function useCollection<T>(
-  getEntry: (id: string) => Entry<T>,
+  getEntry: (id: EntryKey) => Entry<T>,
 ): Collection<T> {
   const [collections, setCollections] = useState<
-    Record<CollectionKey, string[]>
+    Record<CollectionKey, EntryKey[]>
   >(EMPTY);
 
   const get = useCallback(
@@ -28,7 +28,7 @@ export function useCollection<T>(
     [collections, getEntry],
   );
 
-  const set = useCallback((key: CollectionKey, refs: string[]) => {
+  const set = useCallback((key: CollectionKey, refs: EntryKey[]) => {
     setCollections((collections) => {
       return { ...collections, [key]: refs };
     });
