@@ -106,7 +106,7 @@ In the example below we prepare our application for two entities; `User` and `Bo
 
   To share collections; use the same namespace.
   To isolate collections; use a secret namespace.
-  
+
   ```tsx
   import { useStore } from "./store";
   import { useAPI } from "./api";
@@ -311,6 +311,41 @@ In the example below we prepare our application for two entities; `User` and `Bo
     });
   }
   ```
+
+### Storage Format
+
+You will interact with the store using function calls, but it can be useful for understanding to visualize how it works. Internally FlatStore uses a structure like below for storing and pointing at entities.
+
+```ts
+{
+  entries: {
+    index: {
+      "af4295ae78577": {
+        ready: true,
+        data: {
+          id: "af4295ae78577",
+          title: "Old man and the sea",
+        },
+      },
+      "398289e16ba4e": {
+        ready: true,
+        data: {
+          id: "398289e16ba4e",
+          title: "Young man and the sun",
+        },
+      },
+    },
+  },
+  collection: {
+    index: {
+      "user/4aa66bde-d11e-4791-8a09-4beabb83fe70/dashboard": [
+        "af4295ae78577",
+        "398289e16ba4e",
+      ],
+    },
+  },
+}
+```
 
 ## Higher-Order hooks
 
