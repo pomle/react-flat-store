@@ -169,13 +169,21 @@ In the example below we prepare our application for two entities; `User` and `Bo
   };
   ```
 
+- `EntryCollection<T>`
+
+  Represents result from collection.
+
+  ```ts
+  type EntryCollection<T> = Entry<T | null>[];
+  ```
+
 - `Collection<T>`
 
   Stores collection pointers, and retrieves collection values.
 
   ```ts
   type Collection<T> = {
-    get: (key: CollectionKey) => Entry<T | null>[] | null;
+    get: (key: CollectionKey) => EntryCollection<T> | null;
     set: (key: CollectionKey, refs: EntryKey[]) => void;
   };
   ```
@@ -254,6 +262,52 @@ In the example below we prepare our application for two entities; `User` and `Bo
     return bookEntries.filter(withData).map((userEntry) => {
       const user = userEntry.data;
       return <>{user.username}</>;
+    });
+  }
+  ```
+
+- `toList(entries: EntryCollection<T> | null)`
+
+  Helper that returns an Array of `T` guarateed regardless of state of collection and store. Use to ignore handling of asynchronous results.
+
+  ```ts
+  import { useStore } from "./store";
+  import { useAPI } from "./api";
+
+  const SEARCH_NAMESPACE = "book-search";
+
+  function useBookQuery(searchQuery: string) {
+    const api = useAPI();
+
+    const bookStore = useStore().books;
+
+    useEffect(() => {
+      api.queryBooks(searchQuery).then((books) => {
+        const ids: string[] = [];
+        books.forEach((book) => {
+          ids.push(book.id);
+          bookStore.entries.set(book.id, book);
+        });
+        bookStore.collection.set(SEARCH_NAMESPACE, ids);
+      });
+    }, [api, searchQuery, bookStore.entries.set, bookStore.collection.set]);
+
+    const bookEntries = bookStore.collection.get(SEARCH_NAMESPACE);
+
+    return bookEntries;
+  }
+
+  export default function BookSearch() {
+    const query = "hemingway";
+
+    const bookEntries = useBookQuery(query);
+
+    const books = useMemo(() => {
+      return toList(bookEntries);
+    }, [bookEntries]);
+
+    return books.map((book) => {
+      return <>{book.title}</>;
     });
   }
   ```
