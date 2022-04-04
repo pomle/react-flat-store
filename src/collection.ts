@@ -36,21 +36,3 @@ export function useCollection<T>(
 
   return { get, set };
 }
-
-export function useRefs<T>(
-  { get, set }: Collection<T>,
-  namespace: CollectionKey,
-) {
-  const getRefs = useCallback(() => {
-    return get(namespace);
-  }, [namespace, get]);
-
-  const setRefs = useCallback(
-    (refs: string[]) => {
-      set(namespace, refs);
-    },
-    [namespace, set],
-  );
-
-  return { getRefs, setRefs };
-}
