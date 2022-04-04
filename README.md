@@ -89,7 +89,7 @@ In the example below we prepare our application for two entities; `User` and `Bo
     const userEntry = useUser(userId);
 
     if (!userEntry.ready) {
-      return <>Loading user id {userId} </>;
+      return <>Loading user id {userId}</>;
     }
 
     const user = userEntry.data;
