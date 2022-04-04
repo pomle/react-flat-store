@@ -6,7 +6,9 @@ export type Entry<T> = {
   data: T;
 };
 
-type Entries<T> = Record<string, Entry<T>>;
+export type EntryKey = string;
+
+type Entries<T> = Record<EntryKey, Entry<T>>;
 
 const EMPTY = Object.create(null);
 
@@ -31,7 +33,7 @@ export function useEntries<T>() {
       buffer = {};
     }, FLUSH_THROTTLE);
 
-    return function set(id: string, data: T) {
+    return function set(id: EntryKey, data: T) {
       buffer[id] = {
         ready: true,
         data,
@@ -42,7 +44,7 @@ export function useEntries<T>() {
   }, []);
 
   const get = useCallback(
-    (id: string): Entry<T | null> => {
+    (id: EntryKey): Entry<T | null> => {
       return entries[id] || PLACEHOLDER;
     },
     [entries],
