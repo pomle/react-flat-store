@@ -11,7 +11,7 @@ export type EntityStore<T> = {
 
 export function useEntity<T>() {
   const entries = useEntries<T>();
-  const collection = useCollection(entries.get);
+  const collection = useCollection<T>(entries.get);
 
   return {
     entries,
