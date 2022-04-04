@@ -49,3 +49,43 @@ In the example below we prepare our application for two entities; `User` and `Bo
     );
   }
   ```
+
+- Call `useStore` in components to access your store for reading and writing. In the example below, an API that can fetch users from a backend is imagined.
+
+  ```tsx
+  import { useStore } from "./store";
+  import { useAPI } from "./api";
+
+  function useUser(userId: string) {
+    const api = useAPI();
+    const userStore = useStore().users;
+
+    useEffect(() => {
+      api.fetchUser(userId).then((user) => {
+        userStore.entries.set(user.id, user);
+      });
+    }, [userId, userStore.entries.set]);
+
+    const userEntry = userStore.entries.get(userId);
+
+    return userEntry;
+  }
+
+  export default function UserInfo() {
+    const userId = "3jk7f893j92385";
+
+    const userEntry = useUser(userId);
+
+    if (!userEntry.ready) {
+      return <div>Loading user id {userId} </div>;
+    }
+
+    const user = userEntry.data;
+
+    if (!user) {
+      return <div>User with id {userId} does not exist</div>;
+    }
+
+    return <div>User name: {user.username}</div>;
+  }
+  ```
