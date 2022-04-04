@@ -102,7 +102,7 @@ In the example below we prepare our application for two entities; `User` and `Bo
   }
   ```
 
-- Combine collection writes with entry writes to work with normalized data over multiple queries. Namespace can be used to isolating collections, as well as sharing collections.
+- Combine collection writes with entry writes to work with normalized data over multiple queries. Namespace can be used for isolating collections, as well as sharing collections.
 
   To share collections; use the same namespace.
   To isolate collections; use a secret namespace.
