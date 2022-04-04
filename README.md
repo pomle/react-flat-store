@@ -2,7 +2,7 @@
 
 Flat, typed store for normalised data. FlatStore builds on the premise that you want to store entities with the same id in only one place, and be able to point at them to maintain lists.
 
-To accomplish this, flat store abstracts the following work loads.
+To accomplish this, FlatStore abstracts the following work loads.
 
 - Setting up key/value stores.
 - Reading and Writing from key/value stores.
