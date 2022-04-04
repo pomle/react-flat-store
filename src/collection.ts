@@ -3,8 +3,10 @@ import { Entry, EntryKey } from "./entries";
 
 type CollectionKey = string;
 
+export type EntryCollection<T> = Entry<T | null>[];
+
 export type Collection<T> = {
-  get: (key: CollectionKey) => Entry<T | null>[] | null;
+  get: (key: CollectionKey) => EntryCollection<T> | null;
   set: (key: CollectionKey, refs: EntryKey[]) => void;
 };
 
