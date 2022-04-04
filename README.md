@@ -175,8 +175,8 @@ In the example below we prepare our application for two entities; `User` and `Bo
 
   ```ts
   type Collection<T> = {
-    get: (key: string) => Entry<T>[] | null;
-    set: (key: string, refs: string[]) => void;
+    get: (key: CollectionKey) => Entry<T | null>[] | null;
+    set: (key: CollectionKey, refs: EntryKey[]) => void;
   };
   ```
 
@@ -187,8 +187,8 @@ In the example below we prepare our application for two entities; `User` and `Bo
   ```ts
   type EntityStore<T> = {
     entries: {
-      set: (id: string, data: T) => void;
-      get: (id: string) => Entry<T | null>;
+      set: (id: EntryKey, data: T) => void;
+      get: (id: EntryKey) => Entry<T | null>;
     };
     collection: Collection<T>;
   };
