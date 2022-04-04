@@ -1,10 +1,19 @@
 # React Flat Store
 
-Flat, typed store for normalised data.
+Flat, typed store for normalised data. FlatStore builds on the premise that you want to store entities with the same id in only one place, and be able to point at them to maintain lists.
+
+To accomplish this, flat store abstracts the following work loads.
+- Setting up key/value stores.
+- Reading and Writing from key/value stores.
+- Maintaining collections of ids pointing to values in key/value stores.
+- Providing arrays of objects based on collections and key/value stores.
+- Providing updates to React.
 
 ## Usage
 
 Flat Store comes with one core component, the `useEntity` hook. You are encourage to set up your solution by providing a hook that provides the entire state tree to the context creator, and then use the `useStore` hook that the context creator provides to access the store.
+
+### Examples
 
 In the example below we prepare our application for two entities; `User` and `Book`.
 
@@ -89,3 +98,12 @@ In the example below we prepare our application for two entities; `User` and `Bo
     return <div>User name: {user.username}</div>;
   }
   ```
+
+## Documentation
+
+
+
+
+### `useEntity`
+
+Hook containing entities and collections.
