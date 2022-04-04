@@ -311,3 +311,62 @@ In the example below we prepare our application for two entities; `User` and `Bo
     });
   }
   ```
+
+## Higher-Order hooks
+
+FlatStore is a low-level lib and when working with FlatStore you may notice that some operations become repetitive. You are encouraged to write higher order hooks that removes repetitive, recurring workloads.
+
+A common example of this is when an API provides a list of entities and you want to normalise the entities and create a collection for them at the once. If all entities from the API follow a similar pattern, where they all have a `id` member, a hook like below may then be useful.
+
+```ts
+import { useCallback } from "react";
+import { EntityStore } from "@pomle/react-flat-store";
+
+export function useEntries<T extends { id: string }>(
+  store: EntityStore<T>,
+  namespace: string,
+) {
+  const { get: getCollection, set: setCollection } = store.collection;
+  const { set: setEntry } = store.entries;
+
+  const getEntries = useCallback(() => {
+    return getCollection(namespace);
+  }, [namespace, getCollection]);
+
+  const setEntries = useCallback(
+    (entities: T[]) => {
+      const ids = entities.map((entry) => {
+        setEntry(entry.id, entry);
+        return entry.id;
+      });
+
+      setCollection(namespace, ids);
+    },
+    [namespace, setEntry, setCollection],
+  );
+
+  return { getEntries, setEntries };
+}
+```
+
+Avoid repetitive tasks by leveraging the hook like below.
+
+```ts
+import { useEntries } from "./useEntries";
+
+export function useBookQuery(options: any, namespace: string) {
+  const api = useAPI();
+
+  const userStore = useStore().user;
+
+  const { getEntries, setEntries } = useEntries(userStore, namespace);
+
+  useEffect(() => {
+    api.queryBooks(options).then((books) => {
+      setEntries(books);
+    });
+  }, [setEntries]);
+
+  return getEntries();
+}
+```
