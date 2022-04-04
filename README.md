@@ -104,9 +104,9 @@ In the example below we prepare our application for two entities; `User` and `Bo
 
 - Combine collection writes with entry writes to work with normalized data over multiple queries. Namespace can be used to isolating collections, as well as sharing collections.
 
-  - To share collections; use the same namespace.
-  - To isolate collections; use a secret namespace.
-
+  To share collections; use the same namespace.
+  To isolate collections; use a secret namespace.
+  
   ```tsx
   import { useStore } from "./store";
   import { useAPI } from "./api";
@@ -357,9 +357,9 @@ import { useEntries } from "./useEntries";
 export function useBookQuery(options: any, namespace: string) {
   const api = useAPI();
 
-  const userStore = useStore().user;
+  const bookStore = useStore().books;
 
-  const { getEntries, setEntries } = useEntries(userStore, namespace);
+  const { getEntries, setEntries } = useEntries(bookStore, namespace);
 
   useEffect(() => {
     api.queryBooks(options).then((books) => {
