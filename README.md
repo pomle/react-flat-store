@@ -104,6 +104,47 @@ In the example below we prepare our application for two entities; `User` and `Bo
 
 ## Documentation
 
-### `useEntity`
+- `Entry<T>`
 
-Hook containing entities and collections.
+  Represents a value in store.
+
+  `ready` flag determines if this value has been set or is indetermined.
+  `data` contains the value when set.
+
+  ```ts
+  type Entry<T> = {
+    ready: boolean;
+    data: T;
+  };
+  ```
+
+- `Collection<T>`
+
+  Stores collection pointers, and retrieves collection values.
+
+  ```ts
+  type Collection<T> = {
+    get: (key: string) => Entry<T>[] | null;
+    set: (key: string, refs: string[]) => void;
+  };
+  ```
+
+- `EntityStore<T>`
+
+  Represents key/value store and collections pointing to values in store. Created by `useEntity`.
+
+  ```ts
+  type EntityStore<T> = {
+    entries: {
+      set: (id: string, data: T) => void;
+      get: (id: string) => Entry<T | null>;
+    };
+    collection: Collection<T>;
+  };
+  ```
+
+- `useEntity`
+
+  Sets up state for key/value store and a handle that allows reading and writing values, and create and retrieve lists of values.
+
+  Returns `EntityStore`.
