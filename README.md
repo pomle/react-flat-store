@@ -194,8 +194,6 @@ In the example below we prepare our application for two entities; `User` and `Bo
   };
   ```
 
-- `useEntity`
+- `useEntity<T>(): EntityStore<T>`
 
   Sets up state for key/value store and a handle that allows reading and writing values, and create and retrieve lists of values.
-
-  Returns `EntityStore`.
