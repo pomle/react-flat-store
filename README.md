@@ -1,6 +1,6 @@
 # React Flat Store
 
-Typed, flat store for normalised data.
+Flat, typed store for normalised data.
 
 ## Usage
 
@@ -8,7 +8,7 @@ Flat Store comes with one core component, the `useEntity` hook. You are encourag
 
 In the example below we prepare our application for two entities; `User` and `Book`.
 
-- `StoreContext.tsx`
+- Create a file containing the store setup; `store.ts`.
 
   ```ts
   import { useEntity, createStoreContext } from "@pomle/react-flat-store";
@@ -33,4 +33,19 @@ In the example below we prepare our application for two entities; `User` and `Bo
   const { useStore, StoreContext } = createStoreContext(useEntities);
 
   export { useStore, StoreContext };
+  ```
+
+- Mount `StoreContext` from `store.ts` above where it is needed. Usually somewhere in the init of your app; here `Boot.tsx`.
+
+  ```tsx
+  import { StoreContext } from "./store";
+  import App from "./App";
+
+  export default function Boot() {
+    return (
+      <StoreContext>
+        <App />
+      </StoreContext>
+    );
+  }
   ```
