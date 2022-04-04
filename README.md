@@ -3,6 +3,7 @@
 Flat, typed store for normalised data. FlatStore builds on the premise that you want to store entities with the same id in only one place, and be able to point at them to maintain lists.
 
 To accomplish this, flat store abstracts the following work loads.
+
 - Setting up key/value stores.
 - Reading and Writing from key/value stores.
 - Maintaining collections of ids pointing to values in key/value stores.
@@ -13,7 +14,7 @@ To accomplish this, flat store abstracts the following work loads.
 
 Flat Store comes with one core component, the `useEntity` hook. You are encourage to set up your solution by providing a hook that provides the entire state tree to the context creator, then call `useStore` hook provided by context creator to access the store.
 
-### Examples
+### Setup
 
 In the example below we prepare our application for two entities; `User` and `Book`.
 
@@ -44,20 +45,22 @@ In the example below we prepare our application for two entities; `User` and `Bo
   export { useStore, StoreContext };
   ```
 
-- Mount `StoreContext` from `store.ts` above where it is needed. Usually somewhere in the init of your app; here `Boot.tsx`.
+- Mount `StoreContext` from `store.ts` above where it is needed. Usually somewhere in the init of your app.
 
   ```tsx
   import { StoreContext } from "./store";
-  import App from "./App";
+  import Main from "./Main";
 
-  export default function Boot() {
+  export default function App() {
     return (
       <StoreContext>
-        <App />
+        <Main />
       </StoreContext>
     );
   }
   ```
+
+### Examples
 
 - Call `useStore` in components to access your store for reading and writing. In the example below, an API that can fetch users from a backend is imagined.
 
@@ -86,23 +89,20 @@ In the example below we prepare our application for two entities; `User` and `Bo
     const userEntry = useUser(userId);
 
     if (!userEntry.ready) {
-      return <div>Loading user id {userId} </div>;
+      return <>Loading user id {userId} </>;
     }
 
     const user = userEntry.data;
 
     if (!user) {
-      return <div>User with id {userId} does not exist</div>;
+      return <>User with id {userId} does not exist</>;
     }
 
-    return <div>User name: {user.username}</div>;
+    return <>User name: {user.username}</>;
   }
   ```
 
 ## Documentation
-
-
-
 
 ### `useEntity`
 
