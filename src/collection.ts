@@ -15,24 +15,24 @@ type CollectionIndex = Record<CollectionKey, EntryKey[]>;
 const EMPTY = Object.create(null);
 
 export function useCollection<T>(getEntry: (id: EntryKey) => Entry<T | null>) {
-  const [collections, setCollections] = useState<CollectionIndex>(EMPTY);
+  const [index, setIndex] = useState<CollectionIndex>(EMPTY);
 
   const get = useCallback(
     (key: CollectionKey) => {
-      const refs = collections[key];
+      const refs = index[key];
       if (refs) {
         return refs.map(getEntry);
       }
       return null;
     },
-    [collections, getEntry],
+    [index, getEntry],
   );
 
   const set = useCallback((key: CollectionKey, refs: EntryKey[]) => {
-    setCollections((collections) => {
-      return { ...collections, [key]: refs };
+    setIndex((index) => {
+      return { ...index, [key]: refs };
     });
   }, []);
 
-  return { get, set };
+  return { get, set, index };
 }
