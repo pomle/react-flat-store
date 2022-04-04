@@ -1,10 +1,10 @@
-import { Entry, useEntries } from "./entries";
+import { Entry, EntryKey, useEntries } from "./entries";
 import { Collection, useCollection } from "./collection";
 
 export type EntityStore<T> = {
   entries: {
-    set: (id: string, data: T) => void;
-    get: (id: string) => Entry<T | null>;
+    set: (id: EntryKey, data: T) => void;
+    get: (id: EntryKey) => Entry<T | null>;
   };
   collection: Collection<T>;
 };
