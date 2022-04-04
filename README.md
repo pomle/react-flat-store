@@ -14,7 +14,7 @@ To accomplish this, flat store abstracts the following work loads.
 
 Flat Store comes with one core component, the `useEntity` hook. You are encourage to set up your solution by providing a hook that provides the entire state tree to the context creator, then call `useStore` hook provided by context creator to access the store.
 
-### Setup
+### Setup Store
 
 In the example below we prepare our application for two entities; `User` and `Book`.
 
@@ -60,7 +60,7 @@ In the example below we prepare our application for two entities; `User` and `Bo
   }
   ```
 
-### Examples
+### Interact with Store
 
 - Call `useStore` in components to access your store for reading and writing. In the example below, an API that can fetch users from a backend is imagined.
 
