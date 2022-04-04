@@ -8,14 +8,14 @@ export type Collection<T> = {
   set: (key: CollectionKey, refs: EntryKey[]) => void;
 };
 
+type CollectionIndex = Record<CollectionKey, EntryKey[]>;
+
 const EMPTY = Object.create(null);
 
 export function useCollection<T>(
   getEntry: (id: EntryKey) => Entry<T>,
 ): Collection<T> {
-  const [collections, setCollections] = useState<
-    Record<CollectionKey, EntryKey[]>
-  >(EMPTY);
+  const [collections, setCollections] = useState<CollectionIndex>(EMPTY);
 
   const get = useCallback(
     (key: CollectionKey) => {

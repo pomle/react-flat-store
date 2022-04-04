@@ -8,7 +8,7 @@ export type Entry<T> = {
 
 export type EntryKey = string;
 
-type Entries<T> = Record<EntryKey, Entry<T>>;
+type EntryIndex<T> = Record<EntryKey, Entry<T>>;
 
 const EMPTY = Object.create(null);
 
@@ -20,10 +20,10 @@ const PLACEHOLDER: Entry<null> = {
 };
 
 export function useEntries<T>() {
-  const [entries, setEntries] = useState<Entries<T>>(EMPTY);
+  const [entries, setEntries] = useState<EntryIndex<T>>(EMPTY);
 
   const set = useMemo(() => {
-    let buffer: Entries<T> = {};
+    let buffer: EntryIndex<T> = {};
 
     const flush = throttle(() => {
       setEntries((entries) => {
