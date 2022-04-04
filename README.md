@@ -114,7 +114,7 @@ In the example below we prepare our application for two entities; `User` and `Bo
   const SEARCH_NAMESPACE = "user-search";
 
   function useUserQuery(searchQuery: string) {
-    const userStore = useStore().patient;
+    const userStore = useStore().users;
 
     useEffect(() => {
       api.queryUsers(searchQuery).then((users) => {
@@ -197,3 +197,63 @@ In the example below we prepare our application for two entities; `User` and `Bo
 - `useEntity<T>(): EntityStore<T>`
 
   Sets up state for key/value store and a handle that allows reading and writing values, and create and retrieve lists of values.
+
+- `withData<T>(entry: Entry<T | null>)`
+
+  Type Guard ensuring that Entry contains data.
+
+  In the following example we imagine a search API which only returns search match metadata, and not the full data. In this case, we may populate the collection pointers before we receive the data. That means some entries in the collection will come in asynchronously after we are aware of them.
+
+  If we do not care about placeholder, and are happy with new data popping in as it arrives, we can use `Array.filter` and `withData` guard to get an array back with Entries guaranteed to be populated.
+
+  ```ts
+  import { useStore } from "./store";
+  import { useAPI } from "./api";
+
+  const SEARCH_NAMESPACE = "book-search";
+
+  function useBookQuery(searchQuery: string) {
+    const api = useAPI();
+
+    const bookStore = useStore().books;
+
+    const fetchBook = useCallback(
+      (bookId: string) => {
+        api.fetchBook(bookId).then((book) => {
+          bookStore.entries.set(book.id, book);
+        });
+      },
+      [api, bookStore.entries.set],
+    );
+
+    useEffect(() => {
+      api.queryBooks(searchQuery).then((matches) => {
+        const ids: string[] = [];
+        matches.forEach((bookMatch) => {
+          ids.push(bookMatch.bookId);
+          loadBook(bookMatch.bookId);
+        });
+        bookStore.collection.set(SEARCH_NAMESPACE, ids);
+      });
+    }, [api, fetchBook, searchQuery, bookStore.collection.set]);
+
+    const bookEntries = bookStore.collection.get(SEARCH_NAMESPACE);
+
+    return bookEntries;
+  }
+
+  export default function BookSearch() {
+    const query = "hemingway";
+
+    const bookEntries = useBookQuery(query);
+
+    if (!bookEntries) {
+      return <>Loading result</>;
+    }
+
+    return bookEntries.filter(withData).map((userEntry) => {
+      const user = userEntry.data;
+      return <>{user.username}</>;
+    });
+  }
+  ```
