@@ -30,9 +30,6 @@ describe("useEntries", () => {
 
     act(() => {
       hook.result.current.set("foo", data);
-
-      jest.advanceTimersByTime(150);
-
       hook.rerender();
     });
 
@@ -51,9 +48,6 @@ describe("useEntries", () => {
 
     act(() => {
       hook.result.current.set("foo", data);
-
-      jest.advanceTimersByTime(150);
-
       hook.rerender();
     });
 
@@ -61,36 +55,5 @@ describe("useEntries", () => {
     expect(result.data).toBe(data);
 
     expect(initial).toBe(hook.result.current.set);
-  });
-
-  it("buffers set calls", () => {
-    const hook = renderHook(() => useEntries<Shape>());
-
-    const data: Shape = {
-      id: "bar",
-    };
-
-    act(() => {
-      hook.result.current.set("a", data);
-      hook.result.current.set("b", data);
-      hook.result.current.set("c", data);
-      hook.result.current.set("d", data);
-      hook.rerender();
-    });
-
-    expect(hook.result.current.get("a").data).toBe(null);
-    expect(hook.result.current.get("b").data).toBe(null);
-    expect(hook.result.current.get("c").data).toBe(null);
-    expect(hook.result.current.get("d").data).toBe(null);
-
-    act(() => {
-      jest.advanceTimersByTime(150);
-      hook.rerender();
-    });
-
-    expect(hook.result.current.get("a").data).toBe(data);
-    expect(hook.result.current.get("b").data).toBe(data);
-    expect(hook.result.current.get("c").data).toBe(data);
-    expect(hook.result.current.get("d").data).toBe(data);
   });
 });
