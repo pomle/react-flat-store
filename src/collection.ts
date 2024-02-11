@@ -8,6 +8,7 @@ export type EntryCollection<T> = Entry<T | null>[];
 export type Collection<T> = {
   get: (key: CollectionKey) => EntryCollection<T> | null;
   set: (key: CollectionKey, refs: EntryKey[]) => void;
+  del: (key: CollectionKey) => void;
 };
 
 type CollectionIndex = Record<CollectionKey, EntryKey[]>;
@@ -34,5 +35,13 @@ export function useCollection<T>(getEntry: (id: EntryKey) => Entry<T | null>) {
     });
   }, []);
 
-  return { get, set, index };
+  const del = useCallback((id: EntryKey) => {
+    setIndex((entries) => {
+      const next = { ...entries };
+      delete next[id];
+      return next;
+    });
+  }, []);
+
+  return { get, set, del, index };
 }
