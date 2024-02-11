@@ -5,6 +5,7 @@ export type EntityStore<T> = {
   entries: {
     set: (id: EntryKey, data: T) => void;
     get: (id: EntryKey) => Entry<T | null>;
+    del: (id: EntryKey) => void;
   };
   collection: Collection<T>;
 };

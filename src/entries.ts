@@ -34,5 +34,13 @@ export function useEntries<T>() {
     [index],
   );
 
-  return { get, set, index };
+  const del = useCallback((id: EntryKey) => {
+    setIndex((entries) => {
+      const next = { ...entries };
+      delete next[id];
+      return next;
+    });
+  }, []);
+
+  return { get, set, del, index };
 }
