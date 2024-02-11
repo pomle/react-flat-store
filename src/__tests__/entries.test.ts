@@ -52,6 +52,24 @@ describe("useEntries", () => {
     expect(initial).toBe(hook.result.current.set);
   });
 
+  it("returns a new get function when index updated", () => {
+    const hook = renderHook(() => useEntries<Shape>());
+
+    const initial = hook.result.current.get;
+
+    const data: Shape = {
+      id: "bar",
+    };
+
+    act(() => {
+      hook.result.current.set("foo", data);
+      hook.rerender();
+    });
+
+    const sequential = hook.result.current.get;
+    expect(sequential).not.toBe(initial);
+  });
+
   it("supports deleting", () => {
     const hook = renderHook(() => useEntries<Shape>());
 
