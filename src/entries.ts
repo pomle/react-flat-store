@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 
 export type Entry<T> = {
-  ready: boolean;
   data: T;
 };
 
@@ -12,7 +11,6 @@ type EntryIndex<T> = Record<EntryKey, Entry<T>>;
 const EMPTY = Object.create(null);
 
 const PLACEHOLDER: Entry<null> = {
-  ready: false,
   data: null,
 };
 
@@ -20,8 +18,7 @@ export function useEntries<T>() {
   const [index, setIndex] = useState<EntryIndex<T>>(EMPTY);
 
   const set = useCallback((id: EntryKey, data: T) => {
-    const entry = {
-      ready: true,
+    const entry: Entry<T> = {
       data,
     };
 

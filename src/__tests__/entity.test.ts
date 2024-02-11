@@ -36,9 +36,7 @@ describe("useEntity", () => {
     const entries = hook.result.current.collection.get("my-list");
 
     expect(entries?.length).toBe(2);
-    expect(entries?.[0].ready).toBe(true);
     expect(entries?.[0].data).toBe(a);
-    expect(entries?.[1].ready).toBe(true);
     expect(entries?.[1].data).toBe(b);
   });
 });
