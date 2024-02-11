@@ -51,4 +51,25 @@ describe("useEntries", () => {
 
     expect(initial).toBe(hook.result.current.set);
   });
+
+  it("supports deleting", () => {
+    const hook = renderHook(() => useEntries<Shape>());
+
+    const data: Shape = {
+      id: "bar",
+    };
+
+    act(() => {
+      hook.result.current.set("foo", data);
+      hook.rerender();
+    });
+
+    act(() => {
+      hook.result.current.del("foo");
+      hook.rerender();
+    });
+
+    const result = hook.result.current.get("foo");
+    expect(result).toEqual({ data: null });
+  });
 });
