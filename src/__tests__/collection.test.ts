@@ -10,7 +10,7 @@ describe("useCollection", () => {
   it("returns null if collection never", () => {
     const hook = renderHook(() =>
       useCollection<Shape>(() => {
-        return { ready: true, data: { id: "foo" } };
+        return { data: { id: "foo" } };
       }),
     );
 
@@ -18,7 +18,7 @@ describe("useCollection", () => {
   });
 
   it("calls supplied getter for each key in a set collection and returns as array", () => {
-    const spy = jest.fn().mockReturnValue({ ready: true, data: { id: "foo" } });
+    const spy = jest.fn().mockReturnValue({ data: { id: "foo" } });
 
     const hook = renderHook(() => useCollection<Shape>(spy));
 

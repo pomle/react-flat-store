@@ -88,7 +88,7 @@ In the example below we prepare our application for two entities; `User` and `Bo
 
     const userEntry = useUser(userId);
 
-    if (!userEntry.ready) {
+    if (!userEntry.data) {
       return <>Loading user id {userId}</>;
     }
 
@@ -159,12 +159,10 @@ In the example below we prepare our application for two entities; `User` and `Bo
 
   Represents a value in store.
 
-  `ready` flag determines if this value has been set or is indetermined.
   `data` contains the value when set.
 
   ```ts
   type Entry<T> = {
-    ready: boolean;
     data: T;
   };
   ```
@@ -321,14 +319,12 @@ You will interact with the store using function calls, but it can be useful for 
   entries: {
     index: {
       "af4295ae78577": {
-        ready: true,
         data: {
           id: "af4295ae78577",
           title: "Old man and the sea",
         },
       },
       "398289e16ba4e": {
-        ready: true,
         data: {
           id: "398289e16ba4e",
           title: "Young man and the sun",

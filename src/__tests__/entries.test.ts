@@ -11,11 +11,6 @@ describe("useEntries", () => {
     jest.useFakeTimers();
   });
 
-  it("returns entry with false ready flag if never set", () => {
-    const hook = renderHook(() => useEntries<Shape>());
-    expect(hook.result.current.get("unset").ready).toBe(false);
-  });
-
   it("returns entry with data set to null if never set", () => {
     const hook = renderHook(() => useEntries<Shape>());
     expect(hook.result.current.get("unset").data).toBe(null);
